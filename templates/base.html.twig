@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head>
+        <meta charset="UTF-8">
+        <title>Workclock - track work time</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('styles/base.css') }}">
+        {% endblock %}
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    {%  block body %}
+    <div class="bg-gradient-to-r from-green-400 to-green-900 text-white py-16">
+        <section class="bg-gradient-to-r from-green-500 to-green-700 text-white py-16">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">WORKCLOCK</h1>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">Track the time you spend working</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/clock" class="bg-white text-green-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition duration-300">Log in</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endblock %}
+</html>

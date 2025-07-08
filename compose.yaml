@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:17.5
+    container_name: workclock-db
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "workclock"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres:/docker-entrypoint-initdb.d
+      - workclock-db:/var/lib/postgresql/data
+
+  keycloak:
+    image: keycloak/keycloak:26.2.4
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: 'jdbc:postgresql://db:5432/workclock?currentSchema=keycloak'
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+      KC_DB_SCHEMA: keycloak
+    ports:
+      - "8080:8080"
+    command:
+      - start-dev
+
+
+volumes:
+  workclock-db:
