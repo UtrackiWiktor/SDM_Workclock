@@ -13,15 +13,20 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
+
+    {% include 'reusables/top_menu_bar.html.twig' %}
+
     {%  block body %}
     <div class="bg-gradient-to-r from-green-400 to-green-900 text-white py-16">
         <section class="bg-gradient-to-r from-green-500 to-green-700 text-white py-16">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">WORKCLOCK</h1>
                 <p class="text-xl mb-8 max-w-2xl mx-auto">Track the time you spend working</p>
+                {% if not app.user %}
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="/clock" class="bg-white text-green-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition duration-300">Log in</a>
+                    <a href="{{ path('connect_keycloak_start') }}" class="bg-white text-green-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition duration-300">Log in</a>
                 </div>
+                {% endif %}
             </div>
         </section>
     </div>

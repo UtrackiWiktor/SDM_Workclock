@@ -27,16 +27,28 @@ class ClockController extends AbstractController
         $entry = new ClockEntry();
         $form = $this->createForm(ClockEntryForm::class, $entry);
 
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em->persist($entry);
-//            $em->flush();
-//
-//            return $this->redirectToRoute('app_clock');
-//        }
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($entry);
+            $em->flush();
+
+            return $this->redirectToRoute('app_clock');
+        }
 
         return $this->render('clock/index.html.twig', [
             'form' => $form
+        ]);
+    }
+
+    #[Route('/entries', name: 'view_entries')]
+    public function viewEntries(EntityManagerInterface $em): Response
+    {
+        // Retrieve all ClockEntry records
+        $entries = $em->getRepository(ClockEntry::class)->findAll();
+
+        // Render the template with the entries
+        return $this->render('clock/view_entries.html.twig', [
+            'entries' => $entries,
         ]);
     }
 }

@@ -1,0 +1,29 @@
+<nav class="top-menu bg-gray-800 text-white shadow">
+    <div class="flex items-center justify-between w-full">
+        <ul class="flex space-x-4 px-6 py-3">
+            <li>
+                <a href="{{ path('home') }}" class="hover:text-yellow-300 transition-colors">Home</a>
+            </li>
+            <li>
+                <a href="{{ path('app_clock') }}" class="hover:text-yellow-300 transition-colors">Add Entry</a>
+            </li>
+            <li>
+                <a href="{{ path('view_entries') }}" class="hover:text-yellow-300 transition-colors">View Entries</a>
+            </li>
+        </ul>
+            <div class="flex text-sm px-4 py-1 bg-gray-700 rounded space-x-4">
+                {% if app.user %}
+                    Logged in as <span class="font-semibold">{{     app.user.username ?? app.user.getUserIdentifier() }}</span>
+                    <div class="space-x-4">
+                        <form method="post" action="{{ path('app_logout') }}">
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-1 px-2 font-semibold rounded">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                {% else %}
+                    Not logged in
+                {% endif %}
+            </div>
+    </div>
+</nav>

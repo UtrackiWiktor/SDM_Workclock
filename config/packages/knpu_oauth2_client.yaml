@@ -1,13 +1,14 @@
 knpu_oauth2_client:
     clients:
-        # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration
-        keyloak_main:
-            type: keycloak
-            # Add other necessary configuration options here
-            # For example:
-            auth_server_url: '%env(KEYCLOAK_AUTH_SERVER_URL)%'
-            realm: '%env(KEYCLOAK_REALM)%'
+        keycloak:
+            provider_class: Stevenmaguire\OAuth2\Client\Provider\Keycloak
+            type: generic
             client_id: '%env(KEYCLOAK_CLIENT_ID)%'
             client_secret: '%env(KEYCLOAK_CLIENT_SECRET)%'
-            redirect_route: 'your_redirect_route'
-            redirect_params: {}
+            use_state: true # Recommended for security
+            redirect_route: connect_keycloak_check
+            provider_options:
+                authServerUrl: '%env(KEYCLOAK_AUTH_SERVER_URL)%'
+                realm: '%env(KEYCLOAK_REALM)%'
+                openid: true
+                scope: 'openid profile email'

@@ -6,6 +6,7 @@ use App\Repository\ClockEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClockEntryRepository::class)]
+#[ORM\Table(name: 'clock_entry', schema: 'workclock')]
 class ClockEntry
 {
     #[ORM\Id]
