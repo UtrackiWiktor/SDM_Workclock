@@ -6,3 +6,7 @@ controllers:
 
 connect_keycloak_check:
     path: /connect/keycloak/check
+
+app_logout:
+    path: /logout
+    methods: GET

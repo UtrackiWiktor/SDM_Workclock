@@ -23,6 +23,19 @@ class ClockEntry
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 36)]
+    private ?string $userKeycloakId;
+
+    #[ORM\ManyToOne(targetEntity: ProjectItem::class)]
+    #[ORM\JoinColumn(
+        name: "project_id",              // force the FK column name
+        referencedColumnName: "id",      // make explicit even if it's the default
+        nullable: true,
+        onDelete: "SET NULL"             // optional, just example
+    )]
+    private ?ProjectItem $project = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,4 +83,25 @@ class ClockEntry
 
         return $this;
     }
+
+    public function getUserKeycloakId(): ?string
+    {
+        return $this->userKeycloakId;
+    }
+
+    public function setUserKeycloakId(?string $userKeycloakId): void
+    {
+        $this->userKeycloakId = $userKeycloakId;
+    }
+
+    public function getProject(): ?ProjectItem
+    {
+        return $this->project;
+    }
+
+    public function setProject(?ProjectItem $project): void
+    {
+        $this->project = $project;
+    }
+
 }

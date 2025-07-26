@@ -13,6 +13,9 @@ security:
             provider: keycloak_user_provider
             custom_authenticator: App\Security\KeycloakAuthenticator
             entry_point: App\Security\KeycloakAuthenticator
+#            logout:
+#                path: app_logout
+#                target: /
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

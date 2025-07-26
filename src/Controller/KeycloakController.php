@@ -32,23 +32,4 @@ class KeycloakController extends AbstractController
 
         return $client->redirect(['openid', 'profile', 'email']); // Request the scopes
     }
-
-    #[Route('/logout', name: 'app_logout')]
-    public function logout(Request $request, TokenStorageInterface $tokenStorage, SessionInterface $session): RedirectResponse
-    {
-        $tokenId = $request->getSession()->get('keycloak_token_id');
-        $this->logger->debug("logout method in KeycloakController: tokenId (" . gettype($tokenId) . ") dump: " . $tokenId ?? "[ERROR: tokenId is null]");
-        dump($request->getSession()->all());
-        // Clear Symfony session
-        $tokenStorage->setToken(null);
-        $session->invalidate();
-
-        $keycloakLogoutUrl = sprintf(
-            'http://localhost:8080/realms/workclock/protocol/openid-connect/logout?post_logout_redirect_uri=%s&client_id=%s',
-            urlencode('http://localhost:8000/'),//urlencode($this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_URL)), // after logout redirect
-            urlencode((string) $tokenId)
-        );
-
-        return new RedirectResponse($keycloakLogoutUrl);
-    }
 }

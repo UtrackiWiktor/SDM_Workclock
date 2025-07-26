@@ -1,24 +1,43 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    <h1>All Clock Entries</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for entry in entries %}
+    <h1 class="text-2xl font-bold mb-4">All Clock Entries</h1>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border border-gray-300 divide-y divide-gray-200 shadow-md rounded-md">
+            <thead class="bg-gray-100">
             <tr>
-                <td>{{ entry.name }}</td>
-                <td>{{ entry.startTime|date('Y-m-d H:i:s') }}</td>
-                <td>{{ entry.endTime|date('Y-m-d H:i:s') }}</td>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Name</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Project</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Start Time</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">End Time</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Time spent</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+            {% for entry in entries %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 text-sm text-gray-800">{{ entry.name }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-800">{{ entry.project.name ?? "---" }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-800">{{ entry.startTime|date('Y-m-d H:i:s') }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-800">{{ entry.endTime|date('Y-m-d H:i:s') }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-800">
+                        {% set interval = entry.endTime.diff(entry.startTime) %}
+                        {{ interval.h + interval.d * 24 }}:{{ interval.i }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="px-4 py-2 text-center text-gray-500 italic">No entries found.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-4 border-gray-300">
+
+    <h6 class="text-md font-semibold mt-4">
+        <b>Sum:</b> {{ timeSumHours }} hours {{ timeSumRemainingMinutes }} minutes
+    </h6>
 {% endblock %}

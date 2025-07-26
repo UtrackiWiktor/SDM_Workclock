@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\ClockEntry;
+use App\Entity\ProjectItem;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,9 +18,15 @@ class ClockEntryForm extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('project', EntityType::class, [
+                'class' => ProjectItem::class,
+                'choice_label' => 'name',
+                'placeholder' => 'No project',
+                'required' => false,
+                'label' => 'Project',
+            ])
             ->add('startTime', DateTimeType::class)
-            ->add('endTime', DateTimeType::class)
-            ->add('save', SubmitType::class);
+            ->add('endTime', DateTimeType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

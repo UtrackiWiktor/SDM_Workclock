@@ -62,7 +62,7 @@ class KeycloakAuthenticator extends AbstractLoginFormAuthenticator implements Au
             ['ROLE_USER']
         );
         $this->logger->debug("Dump id token value for user: " . $user->getUsername() . ": " . $accessToken->getValues()['id_token'] ?? "[ERROR: id token could not be retrieved]");
-        $request->getSession()->set("keycloak_token_id", $accessToken->getValues()['id_token'] ?? null);
+        
         return new SelfValidatingPassport(
             new UserBadge($user->getUserIdentifier(), fn() => $user)
         );

@@ -15,7 +15,7 @@
                 {% if app.user %}
                     Logged in as <span class="font-semibold">{{     app.user.username ?? app.user.getUserIdentifier() }}</span>
                     <div class="space-x-4">
-                        <form method="post" action="{{ path('app_logout') }}">
+                        <form method="get" action="{{ path('app_logout') }}">
                             <button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-1 px-2 font-semibold rounded">
                                 Logout
                             </button>
