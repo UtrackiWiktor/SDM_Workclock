@@ -41,6 +41,9 @@
                         {% set interval = entry.endTime.diff(entry.startTime) %}
                         {{ interval.h + interval.d * 24 }}:{{ interval.i }}
                     </td>
+                    <td>
+                        <a href="{{ path('app_clock_edit', { id: entry.id }) }}" class="text-green-500 hover:underline">Edit</a>
+                    </td>
                 </tr>
             {% else %}
                 <tr>

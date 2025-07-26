@@ -87,6 +87,30 @@ class ClockController extends AbstractController
         ]);
     }
 
+    #[Route('/clock/edit/{id}', name: 'app_clock_edit')]
+    public function editClockEntry(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+        $entry = $em->getRepository(ClockEntry::class)->find($id);
+
+        if (!$entry) {
+            throw $this->createNotFoundException('Clock Entry not found');
+        }
+
+        $form = $this->createForm(ClockEntryForm::class, $entry);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('view_entries');
+        }
+
+        return $this->render('clock/edit.html.twig', [
+            'form' => $form,
+            'entry' => $entry,
+        ]);
+    }
+
     #[Route('/clock/stats', name: 'app_clock_stats')]
     public function clockStats(Request $request, EntityManagerInterface $em): Response
     {
