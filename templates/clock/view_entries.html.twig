@@ -3,6 +3,22 @@
 {% block body %}
     <h1 class="text-2xl font-bold mb-4">All Clock Entries</h1>
 
+    <form method="get" action="{{ path('view_entries') }}" data-turbo="false" class="flex gap-4 items-center mb-4">
+        <input type="date" name="start_date" class="border p-2 rounded" value="{{ app.request.get('start_date') }}">
+        <input type="date" name="end_date" class="border p-2 rounded" value="{{ app.request.get('end_date') }}">
+
+        <select name="project_id" class="border p-2 rounded">
+            <option value="">All Projects</option>
+            {% for project in projects %}
+                <option value="{{ project.id }}" {% if app.request.get('project_id') == project.id %}selected{% endif %}>
+                    {{ project.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Filter</button>
+    </form>
+
     <div class="overflow-x-auto">
         <table class="min-w-full table-auto border border-gray-300 divide-y divide-gray-200 shadow-md rounded-md">
             <thead class="bg-gray-100">
@@ -11,7 +27,7 @@
                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Project</th>
                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Start Time</th>
                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">End Time</th>
-                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Time spent</th>
+                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Time spent (hh:mm)</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">

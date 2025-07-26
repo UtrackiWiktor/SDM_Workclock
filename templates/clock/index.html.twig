@@ -15,7 +15,10 @@
             </div>
             {% endif %}
         {% endfor %}
-        <button class="bg-green-400 text-white px-4 py-2 rounded hover:bg-green-500 place-content-center" type="submit">Submit</button>
+
+        <div class="flex justify-center">
+            <button class="bg-green-400 text-white px-6 py-2 rounded hover:bg-green-500 place-content-center" type="submit">Submit</button>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

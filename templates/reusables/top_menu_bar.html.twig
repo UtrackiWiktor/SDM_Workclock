@@ -10,6 +10,9 @@
             <li>
                 <a href="{{ path('view_entries') }}" class="hover:text-yellow-300 transition-colors">View Entries</a>
             </li>
+            <li class="mr-4">
+                <a href="{{ path('app_clock_stats') }}" data-turbo="false" class="hover:text-yellow-300 transition-colors">Stats</a>
+            </li>
         </ul>
             <div class="flex text-sm px-4 py-1 bg-gray-700 rounded space-x-4">
                 {% if app.user %}

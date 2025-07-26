@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clock Entry Stats{% endblock %}
+
+{% block body %}
+    <div class="flex justify-center mb-4 mt-4">
+        <form method="get" action="{{ path('app_clock_stats') }}" data-turbo="false" class="mb-4 flex gap-4 items-center">
+        <input type="date" name="start_date" class="border p-2 rounded" value="{{ app.request.get('start_date') }}">
+            <input type="date" name="end_date" class="border p-2 rounded" value="{{ app.request.get('end_date') }}">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Filter</button>
+        </form>
+    </div>
+
+    <h1 class="text-2xl font-bold mb-4 text-center">Clock Entry Summary</h1>
+
+    <div class="max-w-3xl mx-auto">
+        <canvas id="clockChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('clockChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|json_encode|raw }},
+                datasets: {{ datasets|json_encode|raw }}
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Time Spent per Project per Day'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Hours'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+{% endblock %}
